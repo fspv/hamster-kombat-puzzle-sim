@@ -12,6 +12,32 @@
     </head>
     <body>
         <a href="index.html#oMooCooMBBCoAAEoCoHoEFFLHGGJoLHIIJKK">Day 1, 2024-07-20</a>
+        <br/>Timer: <span id="timer">30</span>
+        <script>
+           document.addEventListener('DOMContentLoaded', function() {
+               const timerDisplay = document.getElementById('timer');
+               const startButton = document.getElementById('startButton');
+               let countdown;
+
+               function startCountdown(duration) {
+                   let timer = duration, seconds;
+
+                   countdown = setInterval(function() {
+                       seconds = parseInt(timer, 10);
+
+                       timerDisplay.textContent = seconds;
+
+                       if (--timer < 0) {
+                           clearInterval(countdown);
+                           timerDisplay.textContent = "Time's up!";
+                       }
+                   }, 1000);
+               }
+
+               startCountdown(30); // Start a new 30-second countdown
+           });
+        </script>
+
         <div id="view"></div>
         <div class="footer">
             <div class="info">
