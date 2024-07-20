@@ -13,7 +13,10 @@
 
 // Constants
 
-var UnusableHeight = 72 + 24 * 3;
+var UnusableHeight = 72 + // timer
+  72 + // footer
+  72 + // links
+  24 * 5;
 
 // Piece
 
@@ -534,6 +537,26 @@ var sketch = function(p) {
 
 new p5(sketch, 'view');
 
+let countdown;
+
+function startCountdown(duration) {
+  const timerDisplay = document.getElementById('timer');
+  let timer = duration, seconds;
+
+  countdown = setInterval(function() {
+    seconds = parseInt(timer, 10);
+
+    timerDisplay.textContent = seconds;
+
+    if (--timer < 0) {
+      clearInterval(countdown);
+      timerDisplay.textContent = "Time's up!";
+    }
+    }, 
+    1000
+  );
+}
+
 $(function() {
     document.ontouchmove = function(event) {
         event.preventDefault();
@@ -545,6 +568,8 @@ $(function() {
 
     $('#resetButton').click(function() {
         view.reset();
+        clearInterval(countdown);
+        startCountdown(30);
     });
 
     $('#undoButton').click(function() {
@@ -552,4 +577,5 @@ $(function() {
     });
 
     view.parseHash();
+    startCountdown(30);
 });

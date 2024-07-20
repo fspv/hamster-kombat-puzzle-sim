@@ -19,6 +19,26 @@ body {
     position: absolute;
     left: 0;
     right: 0;
+    bottom: 192px;
+    padding: 24px 0;
+    height: 72px;
+    text-align: center;
+}
+
+.timer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 96px;
+    padding: 24px 0;
+    height: 72px;
+    text-align: center;
+}
+
+.links {
+    position: absolute;
+    left: 0;
+    right: 0;
     bottom: 0;
     padding: 24px 0;
     height: 72px;
@@ -53,4 +73,36 @@ button {
         font-size: 14px;
         width: 72px;
     }
+}
+
+.coffee-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #ffffff;
+    background-color: #FF813F;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.coffee-button:hover {
+    background-color: #e07b39;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.previous-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    color: #ffffff;
+    background-color: #1A813F;
+    text-decoration: none;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+.previous-button:hover {
+    background-color: #e07b39;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }

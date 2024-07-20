@@ -4,40 +4,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Rush Hour</title>
+        <title>Hamster Combat Puzzle Simulator</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
-        <script src="rush-hour.js?v=5"></script>
+        <script src="rush-hour.js?v=6"></script>
         <link rel="stylesheet" type="text/css" href="style.css?bust=3">
     </head>
     <body>
-        <a href="index.html#oMooCooMBBCoAAEoCoHoEFFLHGGJoLHIIJKK">Day 1, 2024-07-20</a>
-        <br/>Timer: <span id="timer">30</span>
-        <script>
-           document.addEventListener('DOMContentLoaded', function() {
-               const timerDisplay = document.getElementById('timer');
-               const startButton = document.getElementById('startButton');
-               let countdown;
-
-               function startCountdown(duration) {
-                   let timer = duration, seconds;
-
-                   countdown = setInterval(function() {
-                       seconds = parseInt(timer, 10);
-
-                       timerDisplay.textContent = seconds;
-
-                       if (--timer < 0) {
-                           clearInterval(countdown);
-                           timerDisplay.textContent = "Time's up!";
-                       }
-                   }, 1000);
-               }
-
-               startCountdown(30); // Start a new 30-second countdown
-           });
-        </script>
-
         <div id="view"></div>
         <div class="footer">
             <div class="info">
@@ -49,6 +22,13 @@
                 <button id="resetButton">Reset</button>
                 <button id="undoButton">Undo</button>
             </div>
+        </div>
+        <div class="timer">
+            <span class="label">Timer: <span id="timer">30</span></span>
+        </div>
+        <div class="links">
+            <a href="prev.html" class="previous-button">Previous Puzzles</a>
+            <a href="https://www.buymeacoffee.com/fspv" class="coffee-button" target="_blank">Buy Me a Coffee</a>
         </div>
     </body>
 </html>
