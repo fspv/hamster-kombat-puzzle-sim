@@ -222,7 +222,7 @@ Board.prototype.moves = function() {
 // View
 
 function View() {
-    this.board = new Board("oMooCooMBBCoAAEoCoHoEFFLHGGJoLHIIJKK");
+    this.board = new Board("oBoCDDEBoCFoEBAAFoGGHoFoIoHKKLIMMooL");
     this.movesRequired = 60;
     this.dragPiece = -1;
     this.dragAnchor = null;
@@ -266,7 +266,7 @@ View.prototype.parseHash = function() {
         }
     }
     catch (e) {
-        this.setBoard(new Board("oMooCooMBBCoAAEoCoHoEFFLHGGJoLHIIJKK"), 60);
+        this.setBoard(new Board("oBoCDDEBoCFoEBAAFoGGHoFoIoHKKLIMMooL"), 60);
     }
 }
 
