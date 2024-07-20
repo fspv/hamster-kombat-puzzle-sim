@@ -263,7 +263,7 @@ View.prototype.parseHash = function() {
         }
     }
     catch (e) {
-        this.setBoard(new Board("IBBxooIooLDDJAALooJoKEEMFFKooMGGHHHM"), 60);
+        this.setBoard(new Board("oAooCooABBCoDDEoCoHoEFFLHGGJoLHIIJKK"), 60);
     }
 }
 
