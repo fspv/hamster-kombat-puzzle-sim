@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Hamster Combat Puzzle Simulator</title>
+        <title>Hamster Combat Mini Game Simulator</title>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.6.1/p5.min.js"></script>
         <script src="rush-hour.js?v=7"></script>
@@ -22,6 +22,11 @@
     </head>
     <body>
         <div id="view"></div>
+        <div id="no-puzzle" style="display: none;">
+            <h1>Sorry, no today's mini game yet</h1>
+            <p>We're working to add it very soon, check back in a few hours</p>
+            <img src="sad_hamster.jpg" alt="Oh no" />
+        </div>
         <div class="footer">
             <div class="info">
                 <span class="label">Moves:</span>
@@ -34,11 +39,14 @@
             </div>
         </div>
         <div class="timer">
-            <span class="label">Timer: <span id="timer">30</span></span>
+            <span class="label">Timer: <span id="timer">30</span></span><br/>
+            <span id="daily-time-left" class="label">Daily mini game time left: <span id="puzzle-timer"></span></span>
         </div>
         <div class="links">
-            <a href="prev.html" class="previous-button">Previous Puzzles</a>
+            <a href="prev.html" class="previous-button">Previous Mini Games</a>
+            <a href="index.html" class="main-button">Today's Mini Game</a>
             <a href="https://www.buymeacoffee.com/fspv" class="coffee-button" target="_blank">Buy Me a Coffee</a>
         </div>
+        <div id="prev" style="display: none;"/>
     </body>
 </html>

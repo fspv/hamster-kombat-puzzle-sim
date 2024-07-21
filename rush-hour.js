@@ -6,6 +6,20 @@ let UnusableHeight = 72 + // timer
   72 + // links
   24 * 5;
 
+function parseHash() {
+    try {
+        let hash = location.hash.substring(1);
+        let i = hash.indexOf('/');
+        if (i < 0) {
+            return hash
+        }
+        return null
+    } catch (e) {
+        return null
+    }
+}
+
+
 class Piece {
     constructor(position, size, stride) {
         this.position = position;
@@ -46,8 +60,6 @@ class Piece {
 }
 
 
-
-
 class Move {
     constructor(piece, steps) {
         this.piece = piece;
@@ -83,8 +95,6 @@ class Board {
         // sort piece labels
         let labels = Array.from(positions.keys());
         labels.sort();
-
-        console.log(labels);
 
         // add pieces
         for (let label of labels) {
@@ -127,7 +137,6 @@ class Board {
         }
     }
     addPiece(piece) {
-        console.log("add piece: " + JSON.stringify(piece));
         this.pieces.push(piece);
     }
     doMove(move) {
@@ -213,10 +222,12 @@ class View {
         this.undoStack = [];
 
         this.backgroundColor = "#FFFFFF";
-        this.boardColor = "#F2EACD";
-        this.gridLineColor = "#222222";
-        this.primaryPieceColor = "#CC3333";
+        this.boardColor = "#3d3d3d";
+        this.gridLineColor = "#464646";
+        this.primaryPieceColor = "#DFFF00";
         this.pieceColor = "#338899";
+        this.pieceColorHorizontal = "#02dc60";
+        this.pieceColorVertical = "#fe1e09";
         this.pieceOutlineColor = "#222222";
         this.wallColor = "#222222";
         this.wallBoltColor = "#AAAAAA";
@@ -406,7 +417,7 @@ class View {
         p5.fill(this.boardColor);
         if (board.isSolved()) {
             if (Date.now() % 500 < 250) {
-                p5.fill("#FFFFFF");
+                p5.fill("#AAAAAA");
             }
         }
         p5.stroke(this.gridLineColor);
@@ -455,7 +466,11 @@ class View {
             if (i === 0) {
                 p5.fill(this.primaryPieceColor);
             } else {
-                p5.fill(this.pieceColor);
+                if (piece.stride === 1) {
+                    p5.fill(this.pieceColorHorizontal);
+                } else {
+                    p5.fill(this.pieceColorVertical);
+                }
             }
             piece.draw(p5, size);
         }
@@ -469,7 +484,11 @@ class View {
             if (this.dragPiece === 0) {
                 p5.fill(this.primaryPieceColor);
             } else {
-                p5.fill(this.pieceColor);
+                if (piece.stride === 1) {
+                    p5.fill(this.pieceColorHorizontal);
+                } else {
+                    p5.fill(this.pieceColorVertical);
+                }
             }
             p5.stroke(this.pieceOutlineColor);
             piece.draw(p5, size, offset);
@@ -477,24 +496,28 @@ class View {
     }
 }
 
-let view = new View();
+function showBoard() {
+  let view = new View();
 
-let sketch = function(p) {
-    p.Vector = p5.Vector;
-    view.bind(p);
-    p.draw = function() { view.draw(); }
-    p.keyPressed = function() { view.keyPressed(); }
-    p.mouseDragged = function() { view.mouseDragged(); }
-    p.mousePressed = function() { view.mousePressed(); }
-    p.mouseReleased = function() { view.mouseReleased(); }
-    p.setup = function() { view.setup(); };
-    p.touchEnded = function() { view.touchEnded(); }
-    p.touchMoved = function() { view.touchMoved(); }
-    p.touchStarted = function() { view.touchStarted(); }
-    p.windowResized = function() { view.windowResized(); }
-};
+  let sketch = function(p) {
+      p.Vector = p5.Vector;
+      view.bind(p);
+      p.draw = function() { view.draw(); }
+      p.keyPressed = function() { view.keyPressed(); }
+      p.mouseDragged = function() { view.mouseDragged(); }
+      p.mousePressed = function() { view.mousePressed(); }
+      p.mouseReleased = function() { view.mouseReleased(); }
+      p.setup = function() { view.setup(); };
+      p.touchEnded = function() { view.touchEnded(); }
+      p.touchMoved = function() { view.touchMoved(); }
+      p.touchStarted = function() { view.touchStarted(); }
+      p.windowResized = function() { view.windowResized(); }
+  };
 
-new p5(sketch, 'view');
+  new p5(sketch, 'view');
+
+  return view
+}
 
 let countdown;
 
@@ -511,30 +534,135 @@ function startCountdown(duration) {
       clearInterval(countdown);
       timerDisplay.textContent = "Time's up!";
     }
-    }, 
+    },
     1000
   );
 }
 
+let puzzles = {
+  "2024-07-21": "oBoCDDEBoCFoEBAAFoGGHoFoIoHKKLIMMooL",
+  "2024-07-20": "oMooCooMBBCoAAEoCoHoEFFLHGGJoLHIIJKK",
+}
+
+function hamsterUnixTime() {
+  let nowUTCUnix = Date.now()
+  let nowHamsterUnix = nowUTCUnix + 4 * 3600000;
+
+  return nowHamsterUnix;
+}
+
+function hamsterBeginningOfDayUnix() {
+  let nowHamsterUnix = hamsterUnixTime();
+
+  let nowHamster = new Date(nowHamsterUnix);
+
+  let hamsterDate = nowHamster.toISOString().split('T')[0];
+
+  return new Date(hamsterDate + "T00:00:00.000Z").getTime();
+}
+
+function hamsterEngingOfDayUnix() {
+  return hamsterBeginningOfDayUnix() + 86400000;
+}
+
+function hamsterDate() {
+  let nowHamsterUnix = hamsterUnixTime();
+
+  let nowHamster = new Date(nowHamsterUnix);
+
+  return nowHamster.toISOString().split('T')[0];
+}
+
+function puzzleTimeLeft() {
+  let nowHamsterUnix = hamsterUnixTime();
+
+  return hamsterEngingOfDayUnix() - nowHamsterUnix;
+}
+
+function formatToHoursAndMinutes(unixTime) {
+  let hours = Math.floor(unixTime / 3600000);
+  let minutes = Math.floor((unixTime % 3600000) / 60000);
+
+  return `${hours}h ${minutes}m`;
+}
+
+function puzzleTimeLeftCountdown() {
+  const timerDisplay = document.getElementById('puzzle-timer');
+  timerDisplay.textContent = formatToHoursAndMinutes(puzzleTimeLeft());
+
+  countdown = setInterval(
+    function() {
+      timerDisplay.textContent = formatToHoursAndMinutes(puzzleTimeLeft());
+    },
+    10 * 1000
+  );
+}
+
+
+function getCurrentPuzzle() {
+  if (puzzles[hamsterDate()]) {
+    return puzzles[hamsterDate()];
+  }
+
+  return null
+}
+
 $(function() {
-    document.ontouchmove = function(event) {
-        event.preventDefault();
+    // if url has prev.html
+    if (window.location.href.endsWith("prev.html")) {
+      // Fill the div with id "prev" with table containing all the elements of the puzzles object
+      let table = "<table>";
+      table += "<tr><th>Date</th><th>Mini Game</th></tr>";
+      for (let key in puzzles) {
+        table += "<tr><td>" + key + "</td><td><a href='index.html#" + puzzles[key] + "'>link</a></td></tr>";
+      }
+      table += "</table>";
+      console.log(table);
+      $('#prev').html(table);
+
+      return
     }
+    let currentPuzzle = getCurrentPuzzle() || parseHash();
+    if (currentPuzzle !== null && currentPuzzle !== "") {
+      console.log("parsed hash: " + parseHash())
+      if (parseHash() === "" || parseHash() === null) {
+        $('.main-button').hide();
+      } else {
+        $('#daily-time-left').hide();
+      }
 
-    window.onhashchange = function() {
-        view.parseHash();
+      let view = showBoard();
+      view.setBoard(new Board(currentPuzzle), 60);
+      puzzleTimeLeftCountdown();
+
+      document.ontouchmove = function(event) {
+          event.preventDefault();
+      }
+
+      window.onhashchange = function() {
+          view.parseHash();
+          if (parseHash() === "" || parseHash() === null) {
+            $('.main-button').hide();
+          }
+      }
+
+      $('#resetButton').click(function() {
+          view.reset();
+          clearInterval(countdown);
+          startCountdown(30);
+      });
+
+      $('#undoButton').click(function() {
+          view.undo();
+      });
+
+      view.parseHash();
+      startCountdown(30);
+    } else {
+      $('.main-button').hide();
+      $('#view').hide();
+      $('.footer').hide();
+      $('.timer').hide();
+      $('#no-puzzle').show();
     }
-
-    $('#resetButton').click(function() {
-        view.reset();
-        clearInterval(countdown);
-        startCountdown(30);
-    });
-
-    $('#undoButton').click(function() {
-        view.undo();
-    });
-
-    view.parseHash();
-    startCountdown(30);
 });
