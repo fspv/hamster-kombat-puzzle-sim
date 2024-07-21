@@ -1,16 +1,5 @@
 // credits for this code go to: https://github.com/fogleman/rush
 
-  function getQueryParams() {
-      var params = {};
-      var queryString = window.location.search.substring(1);
-      var regex = /([^&=]+)=([^&]*)/g;
-      var match;
-      while (match = regex.exec(queryString)) {
-          params[decodeURIComponent(match[1])] = decodeURIComponent(match[2]);
-      }
-      return params;
-  }
-
 // Constants
 
 var UnusableHeight = 72 + // timer
