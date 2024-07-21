@@ -212,7 +212,7 @@ class Board {
 
 class View {
     constructor() {
-        this.board = new Board("oBoCDDEBoCFoEBAAFoGGHoFoIoHKKLIMMooL");
+        this.board = new Board("BCCoEEBoDFFNAADGoNoHoGMMoHoGLooHKKLo");
         this.movesRequired = 60;
         this.dragPiece = -1;
         this.dragAnchor = null;
@@ -247,7 +247,9 @@ class View {
             let i = hash.indexOf('/');
             if (i < 0) {
                 let desc = hash;
-                this.setBoard(new Board(desc));
+                if (desc !== "" && desc !== null) {
+                  this.setBoard(new Board(desc));
+                }
             } else {
                 let desc = hash.substring(0, i);
                 let movesRequired = parseInt(hash.substring(i + 1));
@@ -255,7 +257,7 @@ class View {
             }
         }
         catch (e) {
-            this.setBoard(new Board("oBoCDDEBoCFoEBAAFoGGHoFoIoHKKLIMMooL"), 60);
+          console.log("error: " + e);
         }
     }
     computeScale() {
@@ -540,6 +542,7 @@ function startCountdown(duration) {
 }
 
 let puzzles = {
+  "2024-07-22": "BCCoEEBoDFFNAADGoNoHoGMMoHoGLooHKKLo",
   "2024-07-21": "oBoCDDEBoCFoEBAAFoGGHoFoIoHKKLIMMooL",
   "2024-07-20": "oMooCooMBBCoAAEoCoHoEFFLHGGJoLHIIJKK",
 }
@@ -617,14 +620,12 @@ $(function() {
         table += "<tr><td>" + key + "</td><td><a href='index.html#" + puzzles[key] + "'>link</a></td></tr>";
       }
       table += "</table>";
-      console.log(table);
       $('#prev').html(table);
 
       return
     }
     let currentPuzzle = getCurrentPuzzle() || parseHash();
     if (currentPuzzle !== null && currentPuzzle !== "") {
-      console.log("parsed hash: " + parseHash())
       if (parseHash() === "" || parseHash() === null) {
         $('.main-button').hide();
       } else {
