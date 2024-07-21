@@ -404,7 +404,7 @@ class View {
         // exit
         let ex = size;
         let ey = board.primaryRow + 0.5;
-        let es = 0.1;
+        let es = 0.3;
         p5.fill(this.gridLineColor);
         p5.noStroke();
         p5.beginShape();
