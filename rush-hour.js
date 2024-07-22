@@ -610,60 +610,64 @@ function getCurrentPuzzle() {
   return null
 }
 
-$(function() {
-    // if url has prev.html
-    if (window.location.href.endsWith("prev.html")) {
-      // Fill the div with id "prev" with table containing all the elements of the puzzles object
-      let table = "<table>";
-      table += "<tr><th>Date</th><th>Mini Game</th></tr>";
-      for (let key in puzzles) {
-        table += "<tr><td>" + key + "</td><td><a href='index.html#" + puzzles[key] + "'>link</a></td></tr>";
-      }
-      table += "</table>";
-      $('#prev').html(table);
+if (window.top === window.self) {
+  $(function() {
+      // if url has prev.html
+      if (window.location.href.endsWith("prev.html")) {
+        // Fill the div with id "prev" with table containing all the elements of the puzzles object
+        let table = "<table>";
+        table += "<tr><th>Date</th><th>Mini Game</th></tr>";
+        for (let key in puzzles) {
+          table += "<tr><td>" + key + "</td><td><a href='index.html#" + puzzles[key] + "'>link</a></td></tr>";
+        }
+        table += "</table>";
+        $('#prev').html(table);
 
-      return
-    }
-    let currentPuzzle = getCurrentPuzzle() || parseHash();
-    if (currentPuzzle !== null && currentPuzzle !== "") {
-      if (parseHash() === "" || parseHash() === null) {
-        $('.main-button').hide();
+        return
+      }
+      let currentPuzzle = getCurrentPuzzle() || parseHash();
+      if (currentPuzzle !== null && currentPuzzle !== "") {
+        if (parseHash() === "" || parseHash() === null) {
+          $('.main-button').hide();
+        } else {
+          $('#daily-time-left').hide();
+        }
+
+        let view = showBoard();
+        view.setBoard(new Board(currentPuzzle), 60);
+        puzzleTimeLeftCountdown();
+
+        document.ontouchmove = function(event) {
+            event.preventDefault();
+        }
+
+        window.onhashchange = function() {
+            view.parseHash();
+            if (parseHash() === "" || parseHash() === null) {
+              $('.main-button').hide();
+            }
+        }
+
+        $('#resetButton').click(function() {
+            view.reset();
+            clearInterval(countdown);
+            startCountdown(30);
+        });
+
+        $('#undoButton').click(function() {
+            view.undo();
+        });
+
+        view.parseHash();
+        startCountdown(30);
       } else {
-        $('#daily-time-left').hide();
+        $('.main-button').hide();
+        $('#view').hide();
+        $('.footer').hide();
+        $('.timer').hide();
+        $('#no-puzzle').show();
       }
-
-      let view = showBoard();
-      view.setBoard(new Board(currentPuzzle), 60);
-      puzzleTimeLeftCountdown();
-
-      document.ontouchmove = function(event) {
-          event.preventDefault();
-      }
-
-      window.onhashchange = function() {
-          view.parseHash();
-          if (parseHash() === "" || parseHash() === null) {
-            $('.main-button').hide();
-          }
-      }
-
-      $('#resetButton').click(function() {
-          view.reset();
-          clearInterval(countdown);
-          startCountdown(30);
-      });
-
-      $('#undoButton').click(function() {
-          view.undo();
-      });
-
-      view.parseHash();
-      startCountdown(30);
-    } else {
-      $('.main-button').hide();
-      $('#view').hide();
-      $('.footer').hide();
-      $('.timer').hide();
-      $('#no-puzzle').show();
-    }
-});
+  });
+} else {
+  $('#view').html("Please visit <a href='https://fspv.github.io/hamster-kombat-puzzle-sim/'>https://fspv.github.io/hamster-kombat-puzzle-sim/</a> to play the game.");
+}
