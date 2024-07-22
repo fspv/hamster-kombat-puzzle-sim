@@ -669,5 +669,11 @@ if (window.top === window.self) {
       }
   });
 } else {
-  $('#view').html("Please visit <a href='https://fspv.github.io/hamster-kombat-puzzle-sim/'>https://fspv.github.io/hamster-kombat-puzzle-sim/</a> to play the game.");
+  $(function() {
+    $('#view').html("Please visit <a href='https://fspv.github.io/hamster-kombat-puzzle-sim/'>https://fspv.github.io/hamster-kombat-puzzle-sim/</a> to play the game.");
+    $('.main-button').hide();
+    $('.footer').hide();
+    $('.timer').hide();
+    $('.previous-button').hide();
+  })
 }
