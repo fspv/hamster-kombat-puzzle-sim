@@ -542,6 +542,7 @@ function startCountdown(duration) {
 }
 
 let puzzles = {
+  "2024-08-20": "CCBHHoooBGoIDAAGoIDEoGJJDEFFKoLLLoKo",
   "2024-08-19": "CoDDooCoBEEEAABFoGMKKFoGMLJJJGoLooHH",
   "2024-08-18": "oCCDEEoBoDFooBAAFGKJJHHGKoLMMMooLooo",
   "2024-08-17": "oBoCDDoBoCEooBAAEoHHGoEoooGFFKJJJooK",
@@ -679,7 +680,7 @@ if (window.top === window.self) {
         $('#resetButton').click(function() {
             view.reset();
             clearInterval(countdown);
-            startCountdown(30);
+            startCountdown(60);
         });
 
         $('#undoButton').click(function() {
@@ -687,7 +688,7 @@ if (window.top === window.self) {
         });
 
         view.parseHash();
-        startCountdown(30);
+        startCountdown(60);
       } else {
         $('.main-button').hide();
         $('#view').hide();
