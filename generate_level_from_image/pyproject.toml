@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "generate-level-from-image"
+version = "0.1.0"
+description = ""
+authors = ["Massimiliano Montaleone <massimilianomontaleone@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pillow = "^10.4.0"
+numpy = "^2.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
