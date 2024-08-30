@@ -542,6 +542,7 @@ function startCountdown(duration) {
 }
 
 let puzzles = {
+  "2024-08-31": "ooBEEoCoBooFCoAAGFCDDDGFooKJHHLLKJoo",
   "2024-08-30": "oBoCCoMBoDooMAADEoMLLLEFooJHEFKKJHGG",
   "2024-08-29": "oBCCDDoBooEooBAAEFJJIoEFKoIHHGKLLooG",
   "2024-08-28": "oEEBooooDBCCFoDAALFoDKKLFGGIJJoHHIoo",
